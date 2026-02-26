@@ -72,6 +72,7 @@ public class Drivetrain extends SubsystemBase {
         backRight.setInverted(true);
 
         SmartDashboard.putData("Field", field);
+
     }
 
     // Teleop drive (joystick)
@@ -91,6 +92,10 @@ public class Drivetrain extends SubsystemBase {
         return field;
     }
 
+    public Pose2d getPose() {
+        return odometry.getPoseMeters();
+    }
+
     // Helpers
     private double simRotationsToMeters(double rotations) {
         double wheelCircumference = 2.0 * Math.PI * Constants.DriveConstants.WHEEL_RADIUS_METERS;
@@ -101,7 +106,6 @@ public class Drivetrain extends SubsystemBase {
     public void periodic() {
         field.setRobotPose(odometry.getPoseMeters());
     }
-
     @Override
     public void simulationPeriodic() {
 
@@ -148,5 +152,6 @@ public class Drivetrain extends SubsystemBase {
         odometry.update(new Rotation2d(simHeadingRadians), simPositions);
 
         field.setRobotPose(odometry.getPoseMeters());
+
     }
 }
